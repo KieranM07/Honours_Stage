@@ -1,4 +1,5 @@
 import os
+os.environ['TF_ENABLE_ONEDNN_OPTS'] = '0'
 import rasterio
 from tensorflow.keras import layers, models
 from sklearn.model_selection import train_test_split
@@ -88,7 +89,6 @@ def architecture():
 
     fire_model.compile(optimizer='adam', loss='sparse_categorical_crossentropy', metrics=['accuracy'])
 
-    print(fire_model.summary())
 
     return fire_model
 
@@ -127,17 +127,6 @@ def evaluation(test_X, test_Y, prediction_model):
     # Convert lists to arrays
     y_pred = np.array(y_pred)
     y_actual = np.array(y_actual)
-
-    # Create confusion matrix
-    conf_matrix = confusion_matrix(y_actual, y_pred)
-
-    # Plot heatmap
-    plt.figure(figsize=(6, 5))
-    sns.heatmap(conf_matrix, annot=True, fmt="d", cmap="Blues", xticklabels=categories, yticklabels=categories)
-    plt.xlabel("Predicted Label")
-    plt.ylabel("Actual Label")
-    plt.title("Prediction Heatmap")
-    plt.show()
 
 
 def user_input():
@@ -189,14 +178,20 @@ def predict_input(bands, model):
     return predicted_label
 
 
-min10, max10, min11, max11 = generate_global_max()
-load_data(min10, max10, min11, max11)
-model_arch = architecture()
-Test_X, Test_Y, fire_prediction_model = train(X, y, model_arch)
-evaluation(Test_X, Test_Y, fire_prediction_model)
+def train_model():
+    min10, max10, min11, max11 = generate_global_max()
+    load_data(min10, max10, min11, max11)
+    model_arch = architecture()
+    Test_X, Test_Y, fire_prediction_model = train(X, y, model_arch)
+    evaluation(Test_X, Test_Y, fire_prediction_model)
+    return min10, max10, min11, max11, fire_prediction_model
+def make_prediction(min_ten,max_ten,min_eleven,max_eleven,fire_model):
+    inputted_file = user_input()
+    user_bands = process_input(inputted_file, min_ten,max_ten,min_eleven,max_eleven)
+    prediction = predict_input(user_bands, fire_model)
 
-inputted_file = user_input()
-user_bands = process_input(inputted_file, min10, max10, min11, max11)
-prediction = predict_input(user_bands, fire_prediction_model)
+    print(categories[prediction])
 
-print(categories[prediction])
+
+#min10, max10, min11, max11, fire_prediction_model = train_model()
+#make_prediction(min10, max10, min11, max11, fire_prediction_model)
