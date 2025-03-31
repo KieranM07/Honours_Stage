@@ -77,7 +77,8 @@ def architecture():
 
     # Define CNN model
     fire_model = models.Sequential([
-        layers.Conv2D(32, (3, 3), activation='relu', input_shape=(84, 84, 3)),
+        layers.Input(shape=(84, 84, 3)),
+        layers.Conv2D(32, (3, 3), activation='relu'),
         layers.MaxPooling2D((2, 2)),
         layers.Conv2D(64, (3, 3), activation='relu'),
         layers.MaxPooling2D((2, 2)),
@@ -111,22 +112,7 @@ def train(X, y, prediction_model):
     return X_test, y_test, prediction_model
 
 
-def evaluation(test_X, test_Y, prediction_model):
-    y_pred = []
-    y_actual = []
 
-    # Iterate over the entire test dataset
-    for index in range(len(test_X)):
-        prediction = prediction_model.predict(test_X[index:index + 1])
-        predicted_label = np.argmax(prediction)  # Get index of highest probability
-        actual_label = test_Y[index]
-
-        y_pred.append(predicted_label)
-        y_actual.append(actual_label)
-
-    # Convert lists to arrays
-    y_pred = np.array(y_pred)
-    y_actual = np.array(y_actual)
 
 
 def user_input():
@@ -145,6 +131,7 @@ def user_input():
 
 
 def process_input(file_path, global_min10, global_max10, global_min11, global_max11):
+    display_input(file_path)
     with rasterio.open(file_path) as dataset:
         # Read required bands
         thermal_band10 = dataset.read(10).astype(float)  # Thermal Band 10
@@ -161,10 +148,22 @@ def process_input(file_path, global_min10, global_max10, global_min11, global_ma
 
         # Stack bands
         combined_bands = np.stack([thermal_band10, thermal_band11, ndvi], axis=-1)
-
     return combined_bands
 
 
+def display_input(fpath):
+    with rasterio.open(fpath) as dataset:
+        red_band = dataset.read(4).astype(float)
+        blue_band = dataset.read(2).astype(float)
+        green_band = dataset.read(3).astype(float)
+
+        # Normalize each band to the range 0-255 for displaying
+        red_band = ((red_band - red_band.min()) / (red_band.max() - red_band.min())) * 255
+        blue_band = ((blue_band - blue_band.min()) / (blue_band.max() - blue_band.min())) * 255
+        green_band = (((green_band - green_band.min()) / (green_band.max() - green_band.min())) * 255)
+        rgb = np.dstack((red_band, green_band, blue_band)).astype(np.uint8)
+        plt.imshow(rgb)
+        plt.show()
 def predict_input(bands, model):
 
     # Reshape input to match training shape
@@ -183,14 +182,15 @@ def train_model():
     load_data(min10, max10, min11, max11)
     model_arch = architecture()
     Test_X, Test_Y, fire_prediction_model = train(X, y, model_arch)
-    evaluation(Test_X, Test_Y, fire_prediction_model)
     return min10, max10, min11, max11, fire_prediction_model
+
 def make_prediction(min_ten,max_ten,min_eleven,max_eleven,fire_model):
     inputted_file = user_input()
     user_bands = process_input(inputted_file, min_ten,max_ten,min_eleven,max_eleven)
     prediction = predict_input(user_bands, fire_model)
 
-    print(categories[prediction])
+    result = categories[prediction]
+    return result
 
 
 #min10, max10, min11, max11, fire_prediction_model = train_model()

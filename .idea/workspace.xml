@@ -5,10 +5,10 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="d8f2aadc-0f24-4a4e-a64d-61892af045ae" name="Changes" comment="">
-      <change afterPath="$PROJECT_DIR$/Tkinter GUI Test.py" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/GEE_DataMaker.ipynb" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/HonoursStageFinal.docx" beforeDir="false" afterPath="$PROJECT_DIR$/HonoursStageFinal.docx" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/PalisadeModel.py" beforeDir="false" afterPath="$PROJECT_DIR$/PalisadeModel.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Tkinter GUI Test.py" beforeDir="false" afterPath="$PROJECT_DIR$/Tkinter GUI Test.py" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -33,17 +33,18 @@
     <option name="hideEmptyMiddlePackages" value="true" />
     <option name="showLibraryContents" value="true" />
   </component>
-  <component name="PropertiesComponent">{
-  &quot;keyToString&quot;: {
-    &quot;Python tests.Python tests in PalisadeModel.py.executor&quot;: &quot;Run&quot;,
-    &quot;Python.PalisadeModel.executor&quot;: &quot;Run&quot;,
-    &quot;Python.Tkinter GUI Test.executor&quot;: &quot;Run&quot;,
-    &quot;RunOnceActivity.OpenProjectViewOnStart&quot;: &quot;true&quot;,
-    &quot;RunOnceActivity.ShowReadmeOnStart&quot;: &quot;true&quot;,
-    &quot;git-widget-placeholder&quot;: &quot;main&quot;,
-    &quot;last_opened_file_path&quot;: &quot;D:/Users/Admin/Documents/GitHub/Honours_Stage&quot;
+  <component name="PropertiesComponent"><![CDATA[{
+  "keyToString": {
+    "ASKED_ADD_EXTERNAL_FILES": "true",
+    "Python tests.Python tests in PalisadeModel.py.executor": "Run",
+    "Python.PalisadeModel.executor": "Run",
+    "Python.Tkinter GUI Test.executor": "Run",
+    "RunOnceActivity.OpenProjectViewOnStart": "true",
+    "RunOnceActivity.ShowReadmeOnStart": "true",
+    "git-widget-placeholder": "main",
+    "last_opened_file_path": "D:/Users/Admin/Documents/GitHub/Honours_Stage"
   }
-}</component>
+}]]></component>
   <component name="RunManager">
     <configuration name="Tkinter GUI Test" type="PythonConfigurationType" factoryName="Python" temporary="true" nameIsGenerated="true">
       <module name="Honours_Stage" />
