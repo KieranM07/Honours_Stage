@@ -12,7 +12,7 @@ from tkinter import filedialog
 
 
 main_dir = "PP_DATA2"
-categories = ["Before_Fire", "Fire", "After_Fire", "No_Fire"]
+categories = ["High chance", "Live fire", "Low chance", "Little to no chance"]
 X, y = [], []
 
 
@@ -100,16 +100,16 @@ def train(X, y, prediction_model):
     y = np.array(y)
 
     # Split dataset
-    X_train, X_test, y_train, y_test = train_test_split(X, y, test_size=0.1, random_state=42)
+    X_train, X_test, y_train, y_test = train_test_split(X, y, test_size=0.15, random_state=42)
 
     # Reshape for CNN (Add channel dimension)
     X_train = X_train[..., np.newaxis]
     X_test = X_test[..., np.newaxis]
 
     # Train the model
-    prediction_model.fit(X_train, y_train, epochs=10, batch_size=32, validation_data=(X_test, y_test))
+    history = prediction_model.fit(X_train, y_train, epochs=8, batch_size=32, validation_data=(X_test, y_test))
 
-    return X_test, y_test, prediction_model
+    return X_test, y_test, prediction_model, history
 
 
 
@@ -151,6 +151,57 @@ def process_input(file_path, global_min10, global_max10, global_min11, global_ma
     return combined_bands
 
 
+# def evaluation(test_X, test_Y, prediction_model, history):
+#     y_pred = []
+#     y_actual = []
+#
+#     # Iterate over the entire test dataset
+#     for index in range(len(test_X)):
+#         prediction = prediction_model.predict(test_X[index:index + 1])
+#         predicted_label = np.argmax(prediction)  # Get index of highest probability
+#         actual_label = test_Y[index]
+#
+#         y_pred.append(predicted_label)
+#         y_actual.append(actual_label)
+#
+#     # Convert lists to arrays
+#     y_pred = np.array(y_pred)
+#     y_actual = np.array(y_actual)
+#
+#     # Create confusion matrix
+#     conf_matrix = confusion_matrix(y_actual, y_pred)
+#
+#     plt.figure(figsize=(12, 8))
+#
+#     # Plot Prediction Heatmap
+#     plt.subplot(2, 2, 1)
+#     categories = ["High_Chance", "Live_Fire", "Low_Chance", "Fire_Unlikely"]
+#     sns.heatmap(conf_matrix, annot=True, fmt="d", cmap="Blues", xticklabels=categories, yticklabels=categories)
+#     plt.xlabel("Predicted Label")
+#     plt.ylabel("Actual Label")
+#     plt.title("Prediction Heatmap")
+#
+#     # Plot Model Accuracy
+#     plt.subplot(2, 2, 2)
+#     plt.plot(history.history['accuracy'])
+#     plt.plot(history.history['val_accuracy'])
+#     plt.title('Model Accuracy')
+#     plt.ylabel('Accuracy')
+#     plt.xlabel('Epoch')
+#     plt.legend(['Train', 'Test'], loc='upper left')
+#
+#     # Plot Model Loss
+#     plt.subplot(2, 1, 2)
+#     plt.plot(history.history['loss'])
+#     plt.plot(history.history['val_loss'])
+#     plt.title('Model Loss')
+#     plt.ylabel('Loss')
+#     plt.xlabel('Epoch')
+#     plt.legend(['Train', 'Test'], loc='upper left')
+#
+#     plt.tight_layout()  # Prevent overlap
+#     plt.show()
+
 def display_input(fpath):
     with rasterio.open(fpath) as dataset:
         red_band = dataset.read(4).astype(float)
@@ -164,6 +215,8 @@ def display_input(fpath):
         rgb = np.dstack((red_band, green_band, blue_band)).astype(np.uint8)
         plt.imshow(rgb)
         plt.show()
+
+
 def predict_input(bands, model):
 
     # Reshape input to match training shape
@@ -181,8 +234,10 @@ def train_model():
     min10, max10, min11, max11 = generate_global_max()
     load_data(min10, max10, min11, max11)
     model_arch = architecture()
-    Test_X, Test_Y, fire_prediction_model = train(X, y, model_arch)
+    Test_X, Test_Y, fire_prediction_model, hist = train(X, y, model_arch)
+   # evaluation(Test_X, Test_Y, fire_prediction_model, hist)
     return min10, max10, min11, max11, fire_prediction_model
+
 
 def make_prediction(min_ten,max_ten,min_eleven,max_eleven,fire_model):
     inputted_file = user_input()
