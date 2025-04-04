@@ -2,6 +2,7 @@ import tkinter as tk
 from tkinter import ttk
 import PalisadeModel
 from tkinter import messagebox
+
 class tkinterApp(tk.Tk):
 
     def __init__(self, *args, **kwargs):
@@ -21,7 +22,7 @@ class tkinterApp(tk.Tk):
         # initialize frames to an empty array
         self.frames = {}
 
-        for F in (HomePage, TrainPage, PredictPage, ResultPage):
+        for F in (HomePage, TrainPage, PredictPage, ResultPage, AboutPage):
             frame = F(container, self)
             self.frames[F] = frame
             frame.grid(row=0, column=0, sticky="nsew")
@@ -36,9 +37,11 @@ class tkinterApp(tk.Tk):
 
 
     def train_model(self):
-        self.min10, self.max10, self.min11, self.max11, self.fire_prediction_model = PalisadeModel.train_model()
-        print("Training complete")
-
+        try:
+            self.min10, self.max10, self.min11, self.max11, self.fire_prediction_model = PalisadeModel.train_model()
+            print("Training complete")
+        except Exception as e:
+            messagebox.showerror("Error", "Training Failed")
     def make_prediction(self):
         try:
             self.prediction = PalisadeModel.make_prediction(self.min10,self.max10,self.min11,self.max11,self.fire_prediction_model)
@@ -70,9 +73,10 @@ class HomePage(tk.Frame):
 
         button1 = ttk.Button(self, text="Train the model", command=lambda: controller.show_frame(TrainPage))
         button2 = ttk.Button(self, text="Make a Prediction", command=lambda: controller.show_frame(PredictPage))
+        button3 = ttk.Button(self, text="About", command=lambda: controller.show_frame(AboutPage))
         button1.grid(row=1, column=1, padx=2, pady=10, sticky="ns")
         button2.grid(row=2, column=1, padx=2, pady=10, sticky="ns")
-
+        button3.grid(row=3, column=1, padx=2, pady=10, sticky ="ns")
 
 class TrainPage(tk.Frame):
     page_title = "Train Model"
@@ -143,6 +147,43 @@ class ResultPage(tk.Frame):
 
     def update_label(self):
         self.label.config(text=f"Prediction: {self.controller.prediction}")
+
+class AboutPage(tk.Frame):
+    page_title = "About"
+    def __init__(self, parent, controller):
+        tk.Frame.__init__(self, parent)
+        self.controller = controller
+        self.grid_rowconfigure(0, weight=0)
+        self.grid_rowconfigure(1, weight=0)
+        self.grid_rowconfigure(2, weight=0)
+        self.grid_columnconfigure(0, weight=1)
+        self.grid_columnconfigure(1, weight=1)
+        self.grid_columnconfigure(2, weight=1)
+
+        self.label = tk.Label(self, text = "About")
+        self.label.grid(row = 1, column = 1, padx=10, pady=10)
+
+        button_home = ttk.Button(self, text="Return Home", command=lambda: controller.show_frame(HomePage))
+        button_home.grid(row=3, column=1, padx=10, pady=10)
+
+class DataHelpPage(tk.Frame):
+    page_title = "Data"
+    def __init__(self, parent, controller):
+        tk.Frame.__init__(self, parent)
+        self.controller = controller
+        self.grid_rowconfigure(0, weight=0)
+        self.grid_rowconfigure(1, weight=0)
+        self.grid_rowconfigure(2, weight=0)
+        self.grid_columnconfigure(0, weight=1)
+        self.grid_columnconfigure(1, weight=1)
+        self.grid_columnconfigure(2, weight=1)
+
+        self.label = tk.Label(self, text = "How to collect usable data")
+        self.label.grid(row = 1, column = 1, padx=10, pady=10)
+
+        button_home = ttk.Button(self, text="Return Home", command=lambda: controller.show_frame(HomePage))
+        button_home.grid(row=3, column=1, padx=10, pady=10)
+
 
 app = tkinterApp()
 app.mainloop()

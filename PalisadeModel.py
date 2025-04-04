@@ -5,8 +5,8 @@ from tensorflow.keras import layers, models
 from sklearn.model_selection import train_test_split
 import numpy as np
 import matplotlib.pyplot as plt
-import seaborn as sns
-from sklearn.metrics import confusion_matrix
+#import seaborn as sns
+#from sklearn.metrics import confusion_matrix
 import tkinter as tk
 from tkinter import filedialog
 
