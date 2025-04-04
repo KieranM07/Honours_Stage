@@ -1,0 +1,10 @@
+Only includes data that does not have a fire but data is taken from the summer when thermal is high
+
+-115.317389,35.191889
+"Summer no fire":ee.ImageCollection("LANDSAT/LC09/C02/T1").filterDate('2024-08-01', '2024-08-17')
+
+# Rectangle for grid in degrees
+height = 0.1
+width = 2.5 * height
+
+72 tiles

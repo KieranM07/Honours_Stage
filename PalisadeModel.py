@@ -5,13 +5,13 @@ from tensorflow.keras import layers, models
 from sklearn.model_selection import train_test_split
 import numpy as np
 import matplotlib.pyplot as plt
-#import seaborn as sns
-#from sklearn.metrics import confusion_matrix
+# import seaborn as sns
+# from sklearn.metrics import confusion_matrix
 import tkinter as tk
 from tkinter import filedialog
 
 
-main_dir = "PP_DATA2"
+main_dir = "Training_Data"
 categories = ["High chance", "Live fire", "Low chance", "Little to no chance"]
 X, y = [], []
 
@@ -247,6 +247,72 @@ def make_prediction(min_ten,max_ten,min_eleven,max_eleven,fire_model):
     result = categories[prediction]
     return result
 
+# def load_test_data(global_min10, global_max10, global_min11, global_max11):
+#     # load, normalise and calc NDVI
+#     X, y = [], []
+#     test_dir = "Test data"
+#     for folder in os.listdir(test_dir):
+#         if folder == main_dir:
+#             continue
+#         folder_path = os.path.join(test_dir, folder)
+#         if os.path.isdir(folder_path):
+#             for category in categories:
+#                 category_path = os.path.join(folder_path, category)
+#                 if os.path.isdir(category_path):
+#                     for file in os.listdir(category_path):
+#                         if file.endswith(".tif"):
+#                             file_path = os.path.join(category_path, file)
+#
+#                             with rasterio.open(file_path) as dataset:
+#                                 # Read bands
+#                                 thermal_band10 = dataset.read(10).astype(float)  # Read Band 10 (thermal)
+#                                 thermal_band11 = dataset.read(11).astype(float)  # Read Band 11 (thermal)
+#                                 nir_band = dataset.read(5).astype(float)      # NIR (Band 5)
+#                                 red_band = dataset.read(4).astype(float)      # Red (Band 4)
+#
+#                                 # Global normalization for thermal bands
+#                                 thermal_band10 = (thermal_band10 - global_min10) / (global_max10 - global_min10)
+#                                 thermal_band11 = (thermal_band11 - global_min11) / (global_max11 - global_min11)
+#
+#                                 # NDVI calculation
+#                                 ndvi = (nir_band - red_band) / (nir_band + red_band + 1e-10)  # Avoid divide by zero errors
+#
+#                                 # Stack bands
+#                                 combined_bands = np.stack([thermal_band10, thermal_band11, ndvi], axis=-1)
+#
+#                                 X.append(combined_bands)
+#                                 y.append(categories.index(category))
+#     return X, y
 
-#min10, max10, min11, max11, fire_prediction_model = train_model()
+
+# def new_data(testX, testY, prediction_model):
+#     y_pred = []
+#     y_actual = []
+#     print(len(testX))
+#     # Iterate over the entire test dataset
+#     for index in range(len(testX)):
+#         testX[index] = np.expand_dims(testX[index], axis=0).astype(np.float32)
+#         prediction = prediction_model.predict(testX[index:index + 1])
+#         predicted_label = np.argmax(prediction)  # Get index of highest probability
+#         actual_label = testY[index]
+#
+#         y_pred.append(predicted_label)
+#         y_actual.append(actual_label)
+#
+#     # Convert lists to arrays
+#     y_pred = np.array(y_pred)
+#     _actual = np.array(y_actual)
+#
+#     conf_matrix = confusion_matrix(y_actual, y_pred)
+#     plt.figure(figsize=(12, 8))
+#     sns.heatmap(conf_matrix, annot=True, fmt="d", cmap="Blues", xticklabels=categories, yticklabels=categories)
+#     plt.xlabel("Predicted Label")
+#     plt.ylabel("Actual Label")
+#     plt.title("Prediction Heatmap")
+#     plt.show()
+#
+#
+# min10, max10, min11, max11, fire_prediction_model = train_model()
+# testx, testy = load_test_data(min10, max10, min11, max11)
+# new_data(testx,testy,fire_prediction_model)
 #make_prediction(min10, max10, min11, max11, fire_prediction_model)

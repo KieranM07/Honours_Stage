@@ -3,6 +3,7 @@ from tkinter import ttk
 import PalisadeModel
 from tkinter import messagebox
 
+
 class tkinterApp(tk.Tk):
 
     def __init__(self, *args, **kwargs):
@@ -22,7 +23,7 @@ class tkinterApp(tk.Tk):
         # initialize frames to an empty array
         self.frames = {}
 
-        for F in (HomePage, TrainPage, PredictPage, ResultPage, AboutPage):
+        for F in (HomePage, TrainPage, PredictPage, ResultPage, AboutPage, DataHelpPage):
             frame = F(container, self)
             self.frames[F] = frame
             frame.grid(row=0, column=0, sticky="nsew")
@@ -35,13 +36,14 @@ class tkinterApp(tk.Tk):
         self.title(frame.page_title)
         frame.tkraise()
 
-
     def train_model(self):
         try:
             self.min10, self.max10, self.min11, self.max11, self.fire_prediction_model = PalisadeModel.train_model()
             print("Training complete")
         except Exception as e:
+            print(e)
             messagebox.showerror("Error", "Training Failed")
+
     def make_prediction(self):
         try:
             self.prediction = PalisadeModel.make_prediction(self.min10,self.max10,self.min11,self.max11,self.fire_prediction_model)
@@ -78,8 +80,10 @@ class HomePage(tk.Frame):
         button2.grid(row=2, column=1, padx=2, pady=10, sticky="ns")
         button3.grid(row=3, column=1, padx=2, pady=10, sticky ="ns")
 
+
 class TrainPage(tk.Frame):
     page_title = "Train Model"
+
     def __init__(self, parent, controller):
         tk.Frame.__init__(self, parent)
         self.controller = controller
@@ -120,8 +124,11 @@ class PredictPage(tk.Frame):
         button_train = ttk.Button(self, text="Predict", command=lambda: [self.controller.make_prediction(), controller.show_frame(ResultPage)])
         button_train.grid(row=1, column=1, padx=10, pady=10)
 
+        button_help = ttk.Button(self, text="How to make data", command=lambda: controller.show_frame(DataHelpPage))
+        button_help.grid(row=2, column=1, padx=10, pady=10)
+
         button_home = ttk.Button(self, text="Return Home", command=lambda: controller.show_frame(HomePage))
-        button_home.grid(row=2, column=1, padx=10, pady=10)
+        button_home.grid(row=3, column=1, padx=10, pady=10)
 
 
 class ResultPage(tk.Frame):
@@ -160,8 +167,8 @@ class AboutPage(tk.Frame):
         self.grid_columnconfigure(1, weight=1)
         self.grid_columnconfigure(2, weight=1)
 
-        self.label = tk.Label(self, text = "About")
-        self.label.grid(row = 1, column = 1, padx=10, pady=10)
+        self.label = tk.Label(self, text ="About")
+        self.label.grid(row=1, column=1, padx=10, pady=10)
 
         button_home = ttk.Button(self, text="Return Home", command=lambda: controller.show_frame(HomePage))
         button_home.grid(row=3, column=1, padx=10, pady=10)
@@ -178,8 +185,8 @@ class DataHelpPage(tk.Frame):
         self.grid_columnconfigure(1, weight=1)
         self.grid_columnconfigure(2, weight=1)
 
-        self.label = tk.Label(self, text = "How to collect usable data")
-        self.label.grid(row = 1, column = 1, padx=10, pady=10)
+        self.label = tk.Label(self, text="How to collect usable data")
+        self.label.grid(row=1, column=1, padx=10, pady=10)
 
         button_home = ttk.Button(self, text="Return Home", command=lambda: controller.show_frame(HomePage))
         button_home.grid(row=3, column=1, padx=10, pady=10)

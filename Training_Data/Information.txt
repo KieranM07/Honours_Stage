@@ -1,0 +1,21 @@
+Pacific palisades fire 2025
+[-118.60, 34.09]
+
+# rectangle for grid in degrees
+height = 0.1
+width = 2.5 * height
+
+datasets = {
+    "Fire": ee.ImageCollection("LANDSAT/LC09/C02/T1")
+        .filterDate('2025-01-14', '2025-01-15')
+        .filterBounds(california),
+    "Before_Fire": ee.ImageCollection("LANDSAT/LC09/C02/T1")
+        .filterDate('2024-12-29', '2024-12-30')
+        .filterBounds(california),
+    "After_Fire": ee.ImageCollection("LANDSAT/LC09/C02/T1")
+        .filterDate('2025-01-30', '2025-01-31')
+        .filterBounds(california),
+    "No_Fire": ee.ImageCollection("LANDSAT/LC09/C02/T1")
+        .filterDate('2024-10-26', '2024-10-27')
+        .filterBounds(california)
+}

@@ -1,0 +1,6 @@
+[-118.9689,34.3189] 
+"Mountain Fire":ee.ImageCollection("LANDSAT/LC09/C02/T1").filterDate('2024-11-06', '2024-11-22')
+ 
+# Rectangle for grid in degrees
+height = 0.1
+width = 2.5 * height
