@@ -107,7 +107,7 @@ def train(X, y, prediction_model):
     X_test = X_test[..., np.newaxis]
 
     # Train the model
-    history = prediction_model.fit(X_train, y_train, epochs=8, batch_size=32, validation_data=(X_test, y_test))
+    history = prediction_model.fit(X_train, y_train, epochs=8, batch_size=32, verbose=0, validation_data=(X_test, y_test))
 
     return X_test, y_test, prediction_model, history
 
@@ -131,7 +131,6 @@ def user_input():
 
 
 def process_input(file_path, global_min10, global_max10, global_min11, global_max11):
-    display_input(file_path)
     with rasterio.open(file_path) as dataset:
         # Read required bands
         thermal_band10 = dataset.read(10).astype(float)  # Thermal Band 10
@@ -148,7 +147,8 @@ def process_input(file_path, global_min10, global_max10, global_min11, global_ma
 
         # Stack bands
         combined_bands = np.stack([thermal_band10, thermal_band11, ndvi], axis=-1)
-    return combined_bands
+        image = display_input(file_path)
+    return combined_bands,image
 
 
 # def evaluation(test_X, test_Y, prediction_model, history):
@@ -213,8 +213,7 @@ def display_input(fpath):
         blue_band = ((blue_band - blue_band.min()) / (blue_band.max() - blue_band.min())) * 255
         green_band = (((green_band - green_band.min()) / (green_band.max() - green_band.min())) * 255)
         rgb = np.dstack((red_band, green_band, blue_band)).astype(np.uint8)
-        plt.imshow(rgb)
-        plt.show()
+        return rgb
 
 
 def predict_input(bands, model):
@@ -241,11 +240,11 @@ def train_model():
 
 def make_prediction(min_ten,max_ten,min_eleven,max_eleven,fire_model):
     inputted_file = user_input()
-    user_bands = process_input(inputted_file, min_ten,max_ten,min_eleven,max_eleven)
+    user_bands,img = process_input(inputted_file, min_ten,max_ten,min_eleven,max_eleven)
     prediction = predict_input(user_bands, fire_model)
 
     result = categories[prediction]
-    return result
+    return result,img
 
 # def load_test_data(global_min10, global_max10, global_min11, global_max11):
 #     # load, normalise and calc NDVI

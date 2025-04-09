@@ -1,8 +1,8 @@
 import tkinter as tk
 from tkinter import ttk
+from PIL import Image, ImageTk
 import PalisadeModel
 from tkinter import messagebox
-
 
 class tkinterApp(tk.Tk):
 
@@ -12,6 +12,7 @@ class tkinterApp(tk.Tk):
         self.geometry("500x400")  # Set the window size (width x height)
 
         self.prediction = None
+        self.input_image = None
 
         container = tk.Frame(self)
         container.pack(side="top", fill="both", expand=True)
@@ -39,15 +40,13 @@ class tkinterApp(tk.Tk):
     def train_model(self):
         try:
             self.min10, self.max10, self.min11, self.max11, self.fire_prediction_model = PalisadeModel.train_model()
-            print("Training complete")
         except Exception as e:
             print(e)
             messagebox.showerror("Error", "Training Failed")
 
     def make_prediction(self):
         try:
-            self.prediction = PalisadeModel.make_prediction(self.min10,self.max10,self.min11,self.max11,self.fire_prediction_model)
-            print(self.prediction)
+            self.prediction, self.input_image = PalisadeModel.make_prediction(self.min10,self.max10,self.min11,self.max11,self.fire_prediction_model)
         except Exception as e:
             print(e)
             messagebox.showerror("Error", "Error: Model not trained")
@@ -146,14 +145,26 @@ class ResultPage(tk.Frame):
 
         self.label = tk.Label(self, text=f"Prediction: {self.controller.prediction}")
         self.label.grid(row=1, column=1, padx=10, pady=10)
+
+        self.image_display = tk.Label(self)
+        self.image_display.grid(row=2, column=1,padx=10,pady=10)
+
         button_predict = ttk.Button(self, text="Make another prediction", command=lambda: controller.show_frame(PredictPage))
-        button_predict.grid(row=2, column=1, padx=10, pady=10)
+        button_predict.grid(row=3, column=1, padx=10, pady=10)
 
         button_home = ttk.Button(self, text="Return Home", command=lambda: controller.show_frame(HomePage))
-        button_home.grid(row=3, column=1, padx=10, pady=10)
+        button_home.grid(row=4, column=1, padx=10, pady=10)
 
     def update_label(self):
         self.label.config(text=f"Prediction: {self.controller.prediction}")
+
+        if self.controller.input_image is not None:
+            image = Image.fromarray(self.controller.input_image)
+            self.tk_image = ImageTk.PhotoImage(image)
+            self.image_display.configure(image = self.tk_image)
+        else:
+            print("error")
+
 
 class AboutPage(tk.Frame):
     page_title = "About"
