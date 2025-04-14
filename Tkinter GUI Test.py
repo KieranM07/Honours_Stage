@@ -181,6 +181,13 @@ class AboutPage(tk.Frame):
         self.label = tk.Label(self, text ="About")
         self.label.grid(row=1, column=1, padx=10, pady=10)
 
+        text = tk.Text(self, height=10, width=60,wrap='word')
+        text.insert(tk.END, "This program will enable the prediction of wildfires in the state of california using data extracted from the google earth engine.")
+        text.insert(tk.END, "\n\n")
+        text.insert(tk.END, "Once a model is trained click to navigate to the prediction screen to get a prediction on your own extracted data.")
+        text.config(state=tk.DISABLED)
+        text.grid(row=2, column=1, padx=10, pady=10)
+
         button_home = ttk.Button(self, text="Return Home", command=lambda: controller.show_frame(HomePage))
         button_home.grid(row=3, column=1, padx=10, pady=10)
 
@@ -198,6 +205,13 @@ class DataHelpPage(tk.Frame):
 
         self.label = tk.Label(self, text="How to collect usable data")
         self.label.grid(row=1, column=1, padx=10, pady=10)
+
+        text = tk.Text(self, height=10, width=60, wrap='word')
+        text.insert(tk.END,"Inside the file structure there is a file called , upload this to google colab and edit the center coordinates and date to capture your fire")
+        text.insert(tk.END, "\n\n")
+        text.insert(tk.END,"Click run to extract the data to your google drive. Once the data has been extracted, download it and it is ready to be inputted into the program for predictions")
+        text.config(state=tk.DISABLED)
+        text.grid(row=2, column=1, padx=10, pady=10)
 
         button_home = ttk.Button(self, text="Return Home", command=lambda: controller.show_frame(HomePage))
         button_home.grid(row=3, column=1, padx=10, pady=10)

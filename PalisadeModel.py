@@ -246,6 +246,10 @@ def make_prediction(min_ten,max_ten,min_eleven,max_eleven,fire_model):
     result = categories[prediction]
     return result,img
 
+def saved_model_predict():
+    # Make a prediction using a saved model
+    pass
+
 # def load_test_data(global_min10, global_max10, global_min11, global_max11):
 #     # load, normalise and calc NDVI
 #     X, y = [], []
