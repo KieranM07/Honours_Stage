@@ -6,8 +6,8 @@
   <component name="ChangeListManager">
     <list default="true" id="d8f2aadc-0f24-4a4e-a64d-61892af045ae" name="Changes" comment="">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/HonoursStageFinal.docx" beforeDir="false" afterPath="$PROJECT_DIR$/HonoursStageFinal.docx" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/PalisadeModel.py" beforeDir="false" afterPath="$PROJECT_DIR$/PalisadeModel.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Tkinter GUI Test.py" beforeDir="false" afterPath="$PROJECT_DIR$/Tkinter GUI Test.py" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -76,7 +76,7 @@
   <component name="SharedIndexes">
     <attachedChunks>
       <set>
-        <option value="bundled-python-sdk-14705d77f0bb-aa17d162503b-com.jetbrains.pycharm.community.sharedIndexes.bundled-PC-243.25659.43" />
+        <option value="bundled-python-sdk-09665e90c3a7-d3b881c8e49f-com.jetbrains.pycharm.community.sharedIndexes.bundled-PC-233.15026.15" />
       </set>
     </attachedChunks>
   </component>
