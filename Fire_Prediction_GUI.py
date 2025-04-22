@@ -4,6 +4,7 @@ from PIL import Image, ImageTk
 import PalisadeModel
 from tkinter import messagebox
 
+
 class tkinterApp(tk.Tk):
 
     def __init__(self, *args, **kwargs):
@@ -13,6 +14,7 @@ class tkinterApp(tk.Tk):
 
         self.prediction = None
         self.input_image = None
+        self.recommended_steps = None
 
         container = tk.Frame(self)
         container.pack(side="top", fill="both", expand=True)
@@ -47,9 +49,10 @@ class tkinterApp(tk.Tk):
     def make_prediction(self):
         try:
             self.prediction, self.input_image = PalisadeModel.make_prediction(self.min10,self.max10,self.min11,self.max11,self.fire_prediction_model)
+            self.recommended_steps = PalisadeModel.recommend_actions(self.prediction)
         except Exception as e:
             print(e)
-            messagebox.showerror("Error", "Error: Model not trained")
+            messagebox.showerror("Error", "Error: Model failed to predict, Ensure model is trained or data is compatible")
 
     def on_closing(self):  # ensure process ends when the window is closed
         self.destroy()
@@ -96,14 +99,18 @@ class TrainPage(tk.Frame):
         label = ttk.Label(self, text="Model Training")
         label.grid(row=0, column=1, padx=10, pady=0)
 
-        button_train = ttk.Button(self, text="Train", command =lambda: self.controller.train_model())
-        button_train.grid(row = 1, column =1, padx = 10,pady = 10)
+        button_train = ttk.Button(self, text="Train", command=lambda: self.controller.train_model())
+        button_train.grid(row=1, column=1, padx=10, pady=10)
+
+        info = ttk.Label(self, text="Program may become unresponsive while training")
+        info.grid(row=2, column=1, padx=10, pady=0)
 
         button_predict = ttk.Button(self, text="Make a prediction",command=lambda: controller.show_frame(PredictPage))
-        button_predict.grid(row=2, column=1, padx=10, pady=10)
+        button_predict.grid(row=3, column=1, padx=10, pady=10)
 
         button_home = ttk.Button(self, text="Return Home", command=lambda: controller.show_frame(HomePage))
-        button_home.grid(row=3, column=1, padx=10, pady=10)
+        button_home.grid(row=4, column=1, padx=10, pady=10)
+
 
 class PredictPage(tk.Frame):
     page_title = "Make a prediction"
@@ -149,14 +156,19 @@ class ResultPage(tk.Frame):
         self.image_display = tk.Label(self)
         self.image_display.grid(row=2, column=1,padx=10,pady=10)
 
+        self.actions = tk.Label(self, text=f"Suggested actions:{self.controller.recommended_steps}")
+        self.actions.grid(row=3, column=1,padx=10,pady=10)
+
         button_predict = ttk.Button(self, text="Make another prediction", command=lambda: controller.show_frame(PredictPage))
-        button_predict.grid(row=3, column=1, padx=10, pady=10)
+        button_predict.grid(row=4, column=1, padx=10, pady=10)
 
         button_home = ttk.Button(self, text="Return Home", command=lambda: controller.show_frame(HomePage))
-        button_home.grid(row=4, column=1, padx=10, pady=10)
+        button_home.grid(row=5, column=1, padx=10, pady=10)
 
     def update_label(self):
         self.label.config(text=f"Prediction: {self.controller.prediction}")
+
+        self.actions.config(text=f"Suggested actions: {self.controller.recommended_steps}")
 
         if self.controller.input_image is not None:
             image = Image.fromarray(self.controller.input_image)
@@ -207,7 +219,7 @@ class DataHelpPage(tk.Frame):
         self.label.grid(row=1, column=1, padx=10, pady=10)
 
         text = tk.Text(self, height=10, width=60, wrap='word')
-        text.insert(tk.END,"Inside the file structure there is a file called , upload this to google colab and edit the center coordinates and date to capture your fire")
+        text.insert(tk.END,"Inside the file structure there is a file called Data_Maker.ipynb, upload this to google colab and edit the center coordinates and date to capture your fire")
         text.insert(tk.END, "\n\n")
         text.insert(tk.END,"Click run to extract the data to your google drive. Once the data has been extracted, download it and it is ready to be inputted into the program for predictions")
         text.config(state=tk.DISABLED)
@@ -215,7 +227,6 @@ class DataHelpPage(tk.Frame):
 
         button_home = ttk.Button(self, text="Return Home", command=lambda: controller.show_frame(HomePage))
         button_home.grid(row=3, column=1, padx=10, pady=10)
-
 
 app = tkinterApp()
 app.mainloop()

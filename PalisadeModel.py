@@ -189,9 +189,20 @@ def make_prediction(min_ten,max_ten,min_eleven,max_eleven,fire_model):
     result = categories[prediction]
     return result,img
 
-def saved_model_predict():
-    # Make a prediction using a saved model
-    pass
+def recommend_actions(prediction):
+    action = None
+    if prediction == "Little to no chance":
+        action = "No action required"
+    elif prediction == "Low chance":
+        action = "Continue to monitor area"
+    elif prediction == "Live fire":
+        action = "Evacuate area if in immediate danger and call the fire department"
+    elif prediction == "High chance":
+        action = "Inform fire department and put necessary precautions in place"
+    else:
+        action = "Error"
+
+    return action
 
 # def evaluation(test_X, test_Y, prediction_model, history):
 #     y_pred = []
