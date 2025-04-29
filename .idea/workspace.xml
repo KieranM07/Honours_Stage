@@ -5,9 +5,12 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="d8f2aadc-0f24-4a4e-a64d-61892af045ae" name="Changes" comment="">
+      <change beforePath="$PROJECT_DIR$/.idea/.name" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/.name" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/misc.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/misc.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Finished Items/Data_Maker.ipynb" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Finished Items/Palisades_Fire_Data_Maker.ipynb" beforeDir="false" />
       <change beforePath="$PROJECT_DIR$/HonoursStageFinal.docx" beforeDir="false" afterPath="$PROJECT_DIR$/HonoursStageFinal.docx" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/PalisadeModel.py" beforeDir="false" afterPath="$PROJECT_DIR$/PalisadeModel.py" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -36,16 +39,18 @@
   &quot;keyToString&quot;: {
     &quot;ASKED_ADD_EXTERNAL_FILES&quot;: &quot;true&quot;,
     &quot;Python tests.Python tests in PalisadeModel.py.executor&quot;: &quot;Run&quot;,
+    &quot;Python.Fire_Prediction_GUI.executor&quot;: &quot;Run&quot;,
     &quot;Python.PalisadeModel.executor&quot;: &quot;Run&quot;,
     &quot;Python.Tkinter GUI Test.executor&quot;: &quot;Run&quot;,
     &quot;RunOnceActivity.OpenProjectViewOnStart&quot;: &quot;true&quot;,
     &quot;RunOnceActivity.ShowReadmeOnStart&quot;: &quot;true&quot;,
     &quot;git-widget-placeholder&quot;: &quot;main&quot;,
-    &quot;last_opened_file_path&quot;: &quot;D:/Users/Admin/Documents/GitHub/Honours_Stage&quot;
+    &quot;last_opened_file_path&quot;: &quot;D:/Users/Admin/Documents/GitHub/Honours_Stage&quot;,
+    &quot;settings.editor.selected.configurable&quot;: &quot;com.jetbrains.python.configuration.PyActiveSdkModuleConfigurable&quot;
   }
 }</component>
   <component name="RunManager">
-    <configuration name="Tkinter GUI Test" type="PythonConfigurationType" factoryName="Python" temporary="true" nameIsGenerated="true">
+    <configuration name="Fire_Prediction_GUI" type="PythonConfigurationType" factoryName="Python" temporary="true" nameIsGenerated="true">
       <module name="Honours_Stage" />
       <option name="ENV_FILES" value="" />
       <option name="INTERPRETER_OPTIONS" value="" />
@@ -58,7 +63,7 @@
       <option name="IS_MODULE_SDK" value="true" />
       <option name="ADD_CONTENT_ROOTS" value="true" />
       <option name="ADD_SOURCE_ROOTS" value="true" />
-      <option name="SCRIPT_NAME" value="$PROJECT_DIR$/Tkinter GUI Test.py" />
+      <option name="SCRIPT_NAME" value="D:\Users\Admin\Documents\GitHub\Honours_Stage\Fire_Prediction_GUI.py" />
       <option name="PARAMETERS" value="" />
       <option name="SHOW_COMMAND_LINE" value="false" />
       <option name="EMULATE_TERMINAL" value="false" />
@@ -69,7 +74,7 @@
     </configuration>
     <recent_temporary>
       <list>
-        <item itemvalue="Python.Tkinter GUI Test" />
+        <item itemvalue="Python.Fire_Prediction_GUI" />
       </list>
     </recent_temporary>
   </component>
